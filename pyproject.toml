@@ -11,7 +11,7 @@ authors = [
 description = "A project for logging in Python"
 readme = "README.md"
 requires-python = ">=3.12"
-license = { text = "BSD-3-Clause" }
+license = text = "BSD-3-Clause"
 
 [project.urls]
 "Homepage" = "https://github.com/pezhmankasraee/logpy"
