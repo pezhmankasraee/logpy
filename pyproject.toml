@@ -8,7 +8,7 @@ version = "0.1.0"
 authors = [
   { name="Pezhman Kasraee", email="pezhmankasraee@gmail.com" },
 ]
-description = "A prokect for logging in Python"
+description = "A project for logging in Python"
 readme = "README.md"
 requires-python = ">=3.12"
 classifiers = [
