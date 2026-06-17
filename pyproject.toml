@@ -11,11 +11,7 @@ authors = [
 description = "A project for logging in Python"
 readme = "README.md"
 requires-python = ">=3.12"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: BSD License",
-    "Operating System :: OS Independent",
-]
+license = { text = "BSD-3-Clause" }
 
 [project.urls]
 "Homepage" = "https://github.com/pezhmankasraee/logpy"
