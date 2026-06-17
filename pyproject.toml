@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "logpy"
+version = "0.1.0"
+authors = [
+  { name="Pezhman Kasraee", email="pezhmankasraee@gmail.com" },
+]
+description = "A prokect for logging in Python"
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/pezhmankasraee/logpy"
