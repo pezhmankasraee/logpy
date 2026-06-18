@@ -1,3 +1,7 @@
+import datetime
+import sys
+
+
 if __name__ == '__main__':
     print('error')
 
@@ -6,6 +10,15 @@ _RED = '\033[31m'
 _YELLOW = '\033[33m'
 _GREEN = '\033[32m'
 _RESET = '\033[0m'
+
+
+LOG_LEVEL_ERROR = 'error'
+LOG_LEVEL_INFO = 'info'
+LOG_LEVEL_WARNING = 'warning'
+
+STD_OUTPUT = 'stdout'
+STD_ERROR = 'stderr'
+STD_OUTPUT_ERROR = 'stdout/stderr'
 
 
 def _colorize_log_type(log_type: str, formatted_type: str) -> str:
@@ -17,7 +30,7 @@ def _colorize_log_type(log_type: str, formatted_type: str) -> str:
     elif log_type.lower() == 'warning':
         title = _YELLOW + formatted_type + _RESET
 
-    return '[' + title + ']'
+    return '[' + title + '] '
 
 
 def _create_header(log_type: str, is_colored=False) -> str:
@@ -32,66 +45,69 @@ def _create_header(log_type: str, is_colored=False) -> str:
             return '[' + formatted_type + ']'
     else:
         raise ValueError('valid error types: error, info and warning')
+    
+
+def _create_log_timestamp() -> str:
+    return datetime.datetime.now().ctime()
 
 
-def log_error(message: str, is_colored=False):
+def _validate_standard_stream(standard_stream: str) -> None:
+    if standard_stream not in (STD_ERROR, STD_OUTPUT, STD_OUTPUT_ERROR):
+        raise ValueError(f'Invalid standard stream: {standard_stream}')
+
+
+def _redirect_log(log_string: str, standard_stream: str) -> None:
+
+    log_string += '\n'
+
+    if standard_stream == STD_OUTPUT:
+        sys.stdout.write(log_string)
+        sys.stdout.flush()
+    elif standard_stream == STD_ERROR:
+        sys.stderr.write(log_string)
+        sys.stderr.flush()
+    elif standard_stream == STD_OUTPUT_ERROR:
+        sys.stdout.write(log_string)
+        sys.stdout.flush()
+        sys.stderr.write(log_string)
+        sys.stderr.flush()
+
+
+def print_log(log_level: str, 
+              message: str, 
+              is_colored: bool = False, 
+              is_timestamp: bool = False, 
+              standard_stream=STD_OUTPUT) -> None:
     """
-    Creates error logs for stdout
+    Creates logs for stdout
 
     Args:
-        message (str): an error message for end user
-        is_colored (bool): if it sets to True, the log status will be red
-
-    Returns:
-        (None)
-
-    Examples:
-        >>> log_error('this is a message')
-        [  error:  ] this is a message
-    """
-    if is_colored:
-        print(_create_header('error', True) + ' ' + message)
-    else:
-        print(_create_header('error') + ' ' + message)
-
-
-def log_info(message: str, is_colored=False):
-    """
-    Creates information logs for stdout
-
-    Args:
+        log_level (str): define levels of log: 'error', 'info' and 'warning'
         message (str): an informative message for end user
         is_colored (bool): if it sets to True, the log status will be green
+        is_timestamp (bool): if it sets to True, the timestamp will be presented in log message
+        standard_stream (str): it will direct the log to stdout, stderr or both
 
     Returns:
         (None)
+    
+    .. note::
+        It is not suggested to use is_colored=True if stderr (STD_ERROR) is used, especially if the log is going
+        to be read by machines
 
     Examples:
-        >>> log_info('this is a message')
+        >>> print_log(LOG_LEVEL_INFO, 'this is a message')
         [  info:   ] this is a message
     """
+    _validate_standard_stream(standard_stream)
+
+    log_string = ''
+    if is_timestamp:
+        log_string  = _create_log_timestamp() + ' - '
+
     if is_colored:
-        print(_create_header('info', True) + ' ' + message)
+        log_string = _create_header(log_level, is_colored) + log_string + message
     else:
-        print(_create_header('info') + ' ' + message)
+        log_string = _create_header(log_level) + ' ' + log_string + message
 
-
-def log_warning(message: str, is_colored=False):
-    """
-    Creates warning logs for stdout
-
-    Args:
-        message (str): a warning message for end user
-        is_colored (bool): if it sets to True, the log staus will be yellow
-
-    Returns:
-        (None)
-
-    Examples:
-        >>> log_warning('this is a message')
-        [ warning: ] this is a message
-    """
-    if is_colored:
-        print(_create_header('warning', True) + ' ' + message)
-    else:
-        print(_create_header('warning') + ' ' + message)
+    _redirect_log(log_string=log_string, standard_stream=standard_stream)

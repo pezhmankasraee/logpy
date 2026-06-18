@@ -1,11 +1,19 @@
 from .log import (
-    log_error,
-    log_info,
-    log_warning,
+    print_log,
+    LOG_LEVEL_ERROR,
+    LOG_LEVEL_INFO,
+    LOG_LEVEL_WARNING,
+    STD_OUTPUT_ERROR,
+    STD_OUTPUT,
+    STD_ERROR,
     )
 
 __all__ = [
-    'log_error',
-    'log_info',
-    'log_warning',
+    'print_log',
+    'LOG_LEVEL_ERROR',
+    'LOG_LEVEL_INFO',
+    'LOG_LEVEL_WARNING',
+    'STD_OUTPUT_ERROR',
+    'STD_OUTPUT',
+    'STD_ERROR',
 ]
