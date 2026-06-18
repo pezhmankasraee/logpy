@@ -13,9 +13,9 @@ def _colorize_log_type(log_type: str, formatted_type: str) -> str:
     if log_type.lower() == 'error':
         title = _RED + formatted_type + _RESET
     elif log_type.lower() == 'info':
-        title = _YELLOW + formatted_type + _RESET
-    elif log_type.lower() == 'warning':
         title = _GREEN + formatted_type + _RESET
+    elif log_type.lower() == 'warning':
+        title = _YELLOW + formatted_type + _RESET
 
     return '[' + title + ']'
 
@@ -40,7 +40,7 @@ def log_error(message: str, is_colored=False):
 
     Args:
         message (str): an error message for end user
-        is_colored (bool): if it sets to True, the error will be red
+        is_colored (bool): if it sets to True, the log status will be red
 
     Returns:
         (None)
@@ -61,7 +61,7 @@ def log_info(message: str, is_colored=False):
 
     Args:
         message (str): an informative message for end user
-        is_colored (bool): if it sets to True, the error will be green
+        is_colored (bool): if it sets to True, the log status will be green
 
     Returns:
         (None)
@@ -82,7 +82,7 @@ def log_warning(message: str, is_colored=False):
 
     Args:
         message (str): a warning message for end user
-        is_colored (bool): if it sets to True, the error will be yellow
+        is_colored (bool): if it sets to True, the log staus will be yellow
 
     Returns:
         (None)
